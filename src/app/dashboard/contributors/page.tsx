@@ -117,7 +117,7 @@ function ContributorsPageContent() {
               <p className="text-sm text-zinc-400 mt-1">
                 See individual contributor 52-week history, PR size trends, review speed over time, and detailed rhythm analysis per contributor.
               </p>
-              <a href="mailto:hello@pulsecheck.dev?subject=PulseCheck%20Pro%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20Pro." className="inline-flex items-center gap-1 mt-3 text-sm text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
+              <a href="/#pricing" className="inline-flex items-center gap-1 mt-3 text-sm text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
                 Upgrade to Pro →
               </a>
             </div>

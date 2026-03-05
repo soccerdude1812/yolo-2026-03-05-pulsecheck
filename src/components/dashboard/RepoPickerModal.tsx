@@ -129,7 +129,7 @@ export function RepoPickerModal({ open, onClose, onRepoAdded }: RepoPickerModalP
                 variant="primary"
                 size="sm"
                 className="mt-3"
-                onClick={() => { handleClose(); window.location.href = 'mailto:hello@pulsecheck.dev?subject=PulseCheck%20Pro%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20Pro.'; }}
+                onClick={() => { handleClose(); window.location.href = '/#pricing'; }}
               >
                 Upgrade to Pro
               </Button>
