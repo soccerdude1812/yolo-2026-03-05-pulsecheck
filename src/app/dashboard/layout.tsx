@@ -37,9 +37,13 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
     if (urlRepoId) {
       setCurrentRepoId(urlRepoId);
     } else if (repos.length > 0 && !currentRepoId) {
+      // Auto-select first repo and update URL so page components can read it
       setCurrentRepoId(repos[0].id);
+      const url = new URL(window.location.href);
+      url.searchParams.set('repo', repos[0].id);
+      router.replace(url.pathname + url.search);
     }
-  }, [repos, searchParams, currentRepoId]);
+  }, [repos, searchParams, currentRepoId, router]);
 
   // Fetch current repo details when ID changes
   useEffect(() => {
