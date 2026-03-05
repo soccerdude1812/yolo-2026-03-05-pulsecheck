@@ -73,7 +73,7 @@ function AlertsPageContent() {
         </div>
         {!hasAlerts && (
           <a
-            href="/#pricing"
+            href="mailto:hello@pulsecheck.dev?subject=PulseCheck%20Pro%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20Pro."
             className="inline-flex items-center gap-1.5 text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
           >
             Upgrade for Slack + email alerts →
@@ -95,7 +95,7 @@ function AlertsPageContent() {
               <p className="text-sm text-zinc-400 mt-1">
                 Receive automatic Slack messages and emails when your health score drops, contributors go silent, or bottlenecks spike.
               </p>
-              <a href="/#pricing" className="inline-flex items-center gap-1 mt-3 text-sm text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
+              <a href="mailto:hello@pulsecheck.dev?subject=PulseCheck%20Pro%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20Pro." className="inline-flex items-center gap-1 mt-3 text-sm text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
                 Upgrade to Pro →
               </a>
             </div>

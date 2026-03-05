@@ -191,7 +191,7 @@ export function Sidebar({ repos, currentRepoId, onRepoChange, onAddRepo, profile
                     {maxRepos === Infinity ? '' : `${repos.length} of ${maxRepos} repos connected`}
                   </p>
                   <button
-                    onClick={() => { window.location.href = '/#pricing'; }}
+                    onClick={() => { window.location.href = 'mailto:hello@pulsecheck.dev?subject=PulseCheck%20Pro%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20Pro.'; }}
                     className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors"
                   >
                     Upgrade to add more repos →

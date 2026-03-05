@@ -123,7 +123,7 @@ export default function SettingsPage() {
           </div>
           {plan === 'free' && (
             <a
-              href="/#pricing"
+              href="mailto:hello@pulsecheck.dev?subject=PulseCheck%20Pro%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20Pro."
               className="text-sm text-emerald-400 hover:text-emerald-300 font-medium transition-colors"
             >
               Upgrade →
@@ -177,7 +177,7 @@ export default function SettingsPage() {
         ) : (
           <div className="text-sm text-zinc-500">
             Upgrade to Pro to enable Slack alerts.{' '}
-            <a href="/#pricing" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+            <a href="mailto:hello@pulsecheck.dev?subject=PulseCheck%20Pro%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20Pro." className="text-emerald-400 hover:text-emerald-300 transition-colors">
               View plans →
             </a>
           </div>
@@ -272,7 +272,7 @@ export default function SettingsPage() {
         ) : (
           <div className="text-sm text-zinc-500">
             Upgrade to Pro to enable email alerts.{' '}
-            <a href="/#pricing" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+            <a href="mailto:hello@pulsecheck.dev?subject=PulseCheck%20Pro%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20Pro." className="text-emerald-400 hover:text-emerald-300 transition-colors">
               View plans →
             </a>
           </div>

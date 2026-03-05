@@ -91,7 +91,7 @@ const plans = [
     period: '/month',
     description: 'For engineering leads tracking multiple repos.',
     cta: 'Get Pro',
-    ctaLink: '/api/auth/github',
+    ctaLink: 'mailto:hello@pulsecheck.dev?subject=PulseCheck%20Pro%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20the%20Pro%20plan.',
     highlighted: true,
     badge: 'Most Popular',
     features: [
@@ -113,7 +113,7 @@ const plans = [
     period: '/month',
     description: 'For engineering managers with large org oversight.',
     cta: 'Get Team',
-    ctaLink: '/api/auth/github',
+    ctaLink: 'mailto:hello@pulsecheck.dev?subject=PulseCheck%20Team%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20the%20Team%20plan.',
     highlighted: false,
     features: [
       { text: 'Unlimited GitHub repos', included: true },

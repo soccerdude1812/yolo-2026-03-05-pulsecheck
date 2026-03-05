@@ -125,11 +125,13 @@ export async function POST(request: Request): Promise<NextResponse> {
   const [owner, repoName] = parts;
 
   // Get GitHub token from user_profiles (persisted during OAuth callback)
-  const { data: tokenData } = await supabase
+  // Use admin client to bypass RLS column restrictions
+  const adminForToken = createAdminSupabase();
+  const { data: tokenData } = await adminForToken
     .from('user_profiles')
     .select('github_token')
     .eq('id', user.id)
-    .single();
+    .single() as { data: { github_token: string | null } | null };
 
   const providerToken = tokenData?.github_token;
 

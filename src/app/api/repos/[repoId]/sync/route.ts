@@ -97,12 +97,6 @@ export async function POST(
     );
   }
 
-  // Update last_manual_sync_at before running sync (prevents double-tapping)
-  await supabase
-    .from('user_profiles')
-    .update({ last_manual_sync_at: new Date().toISOString() })
-    .eq('id', user.id);
-
   // Run sync synchronously — admin client to bypass RLS for writes
   const adminSupabase = createAdminSupabase();
   const result = await syncRepo({
@@ -110,6 +104,15 @@ export async function POST(
     providerToken,  // stays server-side, never serialized into response
     supabase: adminSupabase,
   });
+
+  // Only set last_manual_sync_at AFTER a successful sync
+  // Failed syncs should not consume the rate limit quota
+  if (result.status === 'done' || result.status === 'partial') {
+    await supabase
+      .from('user_profiles')
+      .update({ last_manual_sync_at: new Date().toISOString() })
+      .eq('id', user.id);
+  }
 
   return NextResponse.json({
     data: {

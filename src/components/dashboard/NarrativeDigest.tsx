@@ -151,7 +151,7 @@ export function NarrativeDigest({ latestScore, repoId, profile, onNarrativeGener
           <p className="text-xs text-zinc-500">
             Upgrade to Pro for unlimited AI narratives — every week, automatically.
           </p>
-          <Button variant="primary" size="sm" onClick={() => window.location.href = '/#pricing'}>
+          <Button variant="primary" size="sm" onClick={() => window.location.href = 'mailto:hello@pulsecheck.dev?subject=PulseCheck%20Pro%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20Pro.'}>
             Upgrade to Pro
           </Button>
         </div>
