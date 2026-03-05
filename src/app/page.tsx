@@ -457,9 +457,9 @@ export default function LandingPage() {
             &copy; {new Date().getFullYear()} PulseCheck. Engineering health, automated.
           </p>
           <div className="flex items-center gap-6 text-sm text-zinc-500">
-            <a href="#" className="hover:text-zinc-300 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-zinc-300 transition-colors">Terms</a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">GitHub</a>
+            <a href="mailto:hello@pulsecheck.dev?subject=Privacy%20Policy%20Request" className="hover:text-zinc-300 transition-colors">Privacy</a>
+            <a href="mailto:hello@pulsecheck.dev?subject=Terms%20of%20Service%20Request" className="hover:text-zinc-300 transition-colors">Terms</a>
+            <a href="https://github.com/soccerdude1812/yolo-2026-03-05-pulsecheck" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">GitHub</a>
           </div>
         </div>
       </footer>

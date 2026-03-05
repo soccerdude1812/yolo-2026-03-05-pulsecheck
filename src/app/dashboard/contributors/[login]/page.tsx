@@ -59,12 +59,12 @@ function ContributorDeepDivePageContent() {
         <p className="text-zinc-400 text-sm max-w-sm mb-8 leading-relaxed">
           See individual contributor history across 52 weeks — PR size trends, review speed over time, and detailed rhythm analysis for @{login}.
         </p>
-        <Link
+        <a
           href="mailto:hello@pulsecheck.dev?subject=PulseCheck%20Pro%20Upgrade&body=Hi%2C%20I%27d%20like%20to%20upgrade%20to%20Pro."
           className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-white font-semibold px-6 py-3 rounded-xl transition-colors"
         >
           Upgrade to Pro
-        </Link>
+        </a>
         <Link href={`/dashboard/contributors${repoId ? `?repo=${repoId}` : ''}`} className="mt-4 text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
           ← Back to contributors
         </Link>
