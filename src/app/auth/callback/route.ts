@@ -5,6 +5,7 @@
 
 import { NextResponse } from 'next/server';
 import { createServerSupabase } from '@/lib/supabase/server';
+import { createAdminSupabase } from '@/lib/supabase/admin';
 import { env } from '@/lib/utils/env';
 
 export async function GET(request: Request): Promise<NextResponse> {
@@ -51,18 +52,20 @@ export async function GET(request: Request): Promise<NextResponse> {
     user.user_metadata?.picture ??
     null;
 
-  // Upsert user_profiles — create on first login, update avatar + token on subsequent logins
-  const { error: profileError } = await supabase
+  // Upsert user_profiles — use admin client to bypass RLS for writing github_token
+  const adminSupabase = createAdminSupabase();
+  const profilePayload = {
+    id: user.id,
+    github_username: githubUsername,
+    github_avatar_url: githubAvatarUrl,
+    github_token: session.provider_token ?? null,
+    plan: 'free',
+    updated_at: new Date().toISOString(),
+  };
+  const { error: profileError } = await adminSupabase
     .from('user_profiles')
     .upsert(
-      {
-        id: user.id,
-        github_username: githubUsername,
-        github_avatar_url: githubAvatarUrl,
-        github_token: session.provider_token ?? null,
-        plan: 'free',
-        updated_at: new Date().toISOString(),
-      },
+      profilePayload as never,
       {
         onConflict: 'id',
         ignoreDuplicates: false,
