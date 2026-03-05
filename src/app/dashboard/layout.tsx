@@ -24,6 +24,13 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { addToast } = useToast();
 
+  // Listen for custom event from page EmptyState
+  useEffect(() => {
+    const handler = () => setAddRepoOpen(true);
+    window.addEventListener('pulsecheck:open-repo-picker', handler);
+    return () => window.removeEventListener('pulsecheck:open-repo-picker', handler);
+  }, []);
+
   // Initialize repo from URL or first available
   useEffect(() => {
     const urlRepoId = searchParams.get('repo');

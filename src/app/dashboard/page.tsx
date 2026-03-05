@@ -36,7 +36,7 @@ function DashboardPageContent() {
       <EmptyState
         syncStatus={null}
         hasData={false}
-        onAddRepo={() => {}}
+        onAddRepo={() => window.dispatchEvent(new CustomEvent('pulsecheck:open-repo-picker'))}
         username={profile?.github_username}
       />
     );
