@@ -83,7 +83,7 @@ export function ContributorHeatmap({ rollups, weeks }: ContributorHeatmapProps) 
                 {/* Login */}
                 <div className="w-36 shrink-0 pr-3 text-right">
                   <a
-                    href={`/dashboard/contributors/${login}`}
+                    href={`/dashboard/contributors/${encodeURIComponent(login)}`}
                     className="text-xs text-zinc-400 hover:text-emerald-400 transition-colors truncate block font-mono"
                     title={`@${login}`}
                   >

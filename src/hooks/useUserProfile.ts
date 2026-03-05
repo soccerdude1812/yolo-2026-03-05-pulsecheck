@@ -4,6 +4,17 @@ import { useCallback, useEffect, useState } from 'react';
 import { createClientSupabase } from '@/lib/supabase/client';
 import type { UserProfile } from '@/types/index';
 
+// Shape returned from /api/settings
+interface UserSettings {
+  plan: 'free' | 'pro' | 'team';
+  slack_webhook_configured: boolean;
+  slack_webhook_masked: string | null;
+  resend_email: string | null;
+  narrative_month: string | null;
+  narrative_count: number;
+  last_manual_sync_at: string | null;
+}
+
 interface UseUserProfileResult {
   profile: UserProfile | null;
   loading: boolean;
@@ -20,15 +31,51 @@ export function useUserProfile(): UseUserProfileResult {
     setLoading(true);
     setError(null);
     try {
-      const text = await fetch('/api/user/profile').then((r) => r.text());
-      const json = JSON.parse(text) as { data: UserProfile | null; error: string | null };
-      if (json.error) {
-        setError(json.error);
-        setProfile(null);
+      // Get the Supabase session for user meta
+      const supabase = createClientSupabase();
+      const { data: { user } } = await supabase.auth.getUser();
+
+      // Get settings from API for plan + quota info
+      const text = await fetch('/api/settings').then((r) => r.text());
+      const json = JSON.parse(text) as { data: UserSettings | null; error: string | null };
+
+      if (json.error || !json.data) {
+        // Fallback: build minimal profile from user metadata
+        if (user) {
+          setProfile({
+            id: user.id,
+            github_username: (user.user_metadata?.user_name as string) ?? '',
+            github_avatar_url: (user.user_metadata?.avatar_url as string) ?? null,
+            plan: 'free',
+            slack_webhook_url: null,
+            resend_email: null,
+            narrative_month: null,
+            narrative_count: 0,
+            last_manual_sync_at: null,
+            created_at: user.created_at ?? '',
+            updated_at: user.updated_at ?? '',
+          });
+        } else {
+          setError(json.error ?? 'Failed to load profile');
+          setProfile(null);
+        }
       } else {
-        setProfile(json.data);
+        const settings = json.data;
+        setProfile({
+          id: user?.id ?? '',
+          github_username: (user?.user_metadata?.user_name as string) ?? '',
+          github_avatar_url: (user?.user_metadata?.avatar_url as string) ?? null,
+          plan: settings.plan,
+          slack_webhook_url: null, // never exposed client-side (MF-8)
+          resend_email: settings.resend_email,
+          narrative_month: settings.narrative_month,
+          narrative_count: settings.narrative_count,
+          last_manual_sync_at: settings.last_manual_sync_at,
+          created_at: user?.created_at ?? '',
+          updated_at: user?.updated_at ?? '',
+        });
       }
-    } catch (err) {
+    } catch {
       setError('Failed to load user profile');
       setProfile(null);
     } finally {
