@@ -27,13 +27,17 @@ export async function githubRequest<T>(
 ): Promise<{ data: T; rateLimitRemaining: number }> {
   const { token, method = 'GET', body } = options;
 
-  // Encode each segment separately to preserve real '/' separators (lessons.md fix)
-  const encodedPath = path
+  // Encode each path segment separately to preserve real '/' separators (lessons.md fix)
+  // Split off query string first so we don't encode ? and & characters
+  const [pathPart, queryPart] = path.split('?');
+  const encodedPath = pathPart
     .split('/')
     .map(segment => encodeURIComponent(segment))
     .join('/');
 
-  const url = `${GITHUB_API_BASE}${encodedPath}`;
+  const url = queryPart
+    ? `${GITHUB_API_BASE}${encodedPath}?${queryPart}`
+    : `${GITHUB_API_BASE}${encodedPath}`;
 
   const response = await fetch(url, {
     method,
