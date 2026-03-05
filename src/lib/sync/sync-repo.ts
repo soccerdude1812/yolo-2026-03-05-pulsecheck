@@ -354,6 +354,7 @@ export async function syncRepo(options: SyncRepoOptions): Promise<SyncResult> {
     }
 
     if (err instanceof UpsertError) {
+      console.error(`[sync] UpsertError at step: ${err.step}`, err.cause);
       await supabase
         .from('repos')
         .update({
