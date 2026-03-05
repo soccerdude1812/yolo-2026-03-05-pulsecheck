@@ -84,17 +84,14 @@ export async function GET(request: Request): Promise<NextResponse> {
       break;
     }
 
-    // For cron, we need the user's provider_token from their Supabase session
-    // Since cron runs without a user session, we use the admin client to look up
-    // the user's OAuth token from auth.users (if Supabase stores it)
-    // However, Supabase does not persist provider_token after session expiry.
-    // Cron sync is only viable if user has re-authenticated recently.
-    // We attempt to get it; if missing, mark repo as needing resync.
-    // Attempt to retrieve the user's active session provider_token via admin API
-    // Supabase admin can list users but not their provider tokens directly.
-    // For cron, we use the GITHUB_TOKEN env var as fallback (org-level token).
-    // This is the standard pattern for background sync.
-    const providerToken = env.githubToken;
+    // Get user's stored GitHub token from user_profiles, fall back to env GITHUB_TOKEN
+    const { data: profileData } = await supabase
+      .from('user_profiles')
+      .select('github_token')
+      .eq('id', repoWithProfile.user_profiles.id)
+      .single();
+
+    const providerToken = profileData?.github_token ?? env.githubToken;
 
     if (!providerToken) {
       results.push({

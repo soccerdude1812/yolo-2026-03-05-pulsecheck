@@ -79,13 +79,18 @@ export async function POST(
     );
   }
 
-  // Get provider_token from session — server-side only (MF-7)
-  const { data: { session } } = await supabase.auth.getSession();
-  const providerToken = session?.provider_token;
+  // Get GitHub token from user_profiles (persisted during OAuth callback)
+  const { data: tokenData } = await supabase
+    .from('user_profiles')
+    .select('github_token')
+    .eq('id', user.id)
+    .single();
+
+  const providerToken = tokenData?.github_token;
 
   if (!providerToken) {
     return NextResponse.json(
-      { data: null, error: 'GITHUB_TOKEN_MISSING' },
+      { data: null, error: 'GITHUB_TOKEN_MISSING. Please sign out and sign back in to refresh your GitHub token.' },
       { status: 401 }
     );
   }

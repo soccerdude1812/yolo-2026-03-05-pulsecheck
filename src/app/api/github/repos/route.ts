@@ -17,9 +17,14 @@ export async function GET(): Promise<NextResponse> {
     return NextResponse.json({ data: null, error: 'UNAUTHORIZED' }, { status: 401 });
   }
 
-  // Get provider_token from session — server-side only (MF-7)
-  const { data: { session } } = await supabase.auth.getSession();
-  const providerToken = session?.provider_token;
+  // Get GitHub token from user_profiles (persisted during OAuth callback)
+  const { data: tokenData } = await supabase
+    .from('user_profiles')
+    .select('github_token')
+    .eq('id', user.id)
+    .single();
+
+  const providerToken = tokenData?.github_token;
 
   if (!providerToken) {
     return NextResponse.json(

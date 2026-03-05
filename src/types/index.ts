@@ -61,6 +61,8 @@ export interface UserProfile {
   // MF-1: Free tier narrative quota tracking
   narrative_month: string | null;     // 'YYYY-MM' of last narrative generation
   narrative_count: number;
+  // GitHub OAuth token (persisted from auth callback)
+  github_token: string | null;
   // MF-3: Manual sync rate limiting
   last_manual_sync_at: string | null; // ISO timestamptz
   created_at: string;

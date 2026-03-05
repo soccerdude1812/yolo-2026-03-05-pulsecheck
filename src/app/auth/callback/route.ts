@@ -51,7 +51,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     user.user_metadata?.picture ??
     null;
 
-  // Upsert user_profiles — create on first login, update avatar on subsequent logins
+  // Upsert user_profiles — create on first login, update avatar + token on subsequent logins
   const { error: profileError } = await supabase
     .from('user_profiles')
     .upsert(
@@ -59,6 +59,7 @@ export async function GET(request: Request): Promise<NextResponse> {
         id: user.id,
         github_username: githubUsername,
         github_avatar_url: githubAvatarUrl,
+        github_token: session.provider_token ?? null,
         plan: 'free',
         updated_at: new Date().toISOString(),
       },
