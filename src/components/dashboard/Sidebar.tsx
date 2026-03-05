@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
 import { useAuth } from '@/hooks/useUserProfile';
 import type { RepoSummary, UserProfile } from '@/types/index';
 import { PLAN_LIMITS } from '@/lib/utils/plan';

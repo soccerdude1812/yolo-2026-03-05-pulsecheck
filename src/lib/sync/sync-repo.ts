@@ -22,14 +22,12 @@ import {
   SyncTimeoutError,
   RateLimitError,
   UpsertError,
-  AlertError,
   isAlertError,
 } from './errors';
 import type {
   Repo,
   PRLifecycle,
   SyncResult,
-  GitHubReview,
   RhythmFlag,
   BottleneckItem,
 } from '@/types/index';

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -26,7 +26,7 @@ function alertTypeLabel(type: string): string {
   }
 }
 
-export default function AlertsPage() {
+function AlertsPageContent() {
   const searchParams = useSearchParams();
   const repoId = searchParams.get('repo');
   const { profile } = useUserProfile();
@@ -158,5 +158,17 @@ export default function AlertsPage() {
         )}
       </Card>
     </div>
+  );
+}
+
+export default function AlertsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" />
+      </div>
+    }>
+      <AlertsPageContent />
+    </Suspense>
   );
 }

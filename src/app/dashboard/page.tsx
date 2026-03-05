@@ -1,7 +1,7 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useState } from 'react';
 import { ScoreCard } from '@/components/dashboard/ScoreCard';
 import { ScoreTrendChart } from '@/components/dashboard/ScoreTrendChart';
 import { SubScoreGrid } from '@/components/dashboard/SubScoreGrid';
@@ -16,7 +16,7 @@ import { useUserProfile } from '@/hooks/useUserProfile';
 
 export const dynamic = 'force-dynamic';
 
-export default function DashboardPage() {
+function DashboardPageContent() {
   const searchParams = useSearchParams();
   const repoId = searchParams.get('repo');
   const { data, loading: dashLoading, error: dashError, refetch } = useRepoDashboard(repoId);
@@ -216,5 +216,17 @@ export default function DashboardPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" />
+      </div>
+    }>
+      <DashboardPageContent />
+    </Suspense>
   );
 }

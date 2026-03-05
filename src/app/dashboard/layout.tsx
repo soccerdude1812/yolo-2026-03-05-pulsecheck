@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { Topbar } from '@/components/dashboard/Topbar';
@@ -180,7 +180,13 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <ToastProvider>
-      <DashboardShell>{children}</DashboardShell>
+      <Suspense fallback={
+        <div className="flex h-screen bg-zinc-950 items-center justify-center">
+          <div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" />
+        </div>
+      }>
+        <DashboardShell>{children}</DashboardShell>
+      </Suspense>
     </ToastProvider>
   );
 }

@@ -15,22 +15,6 @@ function average(values: number[]): number {
   return values.reduce((a, b) => a + b, 0) / values.length;
 }
 
-function getWeekDate(weekStart: string): Date {
-  return new Date(weekStart);
-}
-
-/**
- * Get the N most recent weeks' rollup for a contributor.
- */
-function getRecentWeeks(
-  rollups: ContributorRollup[],
-  weekStarts: string[],
-  n: number
-): ContributorRollup[] {
-  const sorted = [...weekStarts].sort().slice(-n);
-  return rollups.filter(r => sorted.includes(r.week_start));
-}
-
 /**
  * Detect a silent contributor (no PRs opened AND no reviews given for N consecutive weeks).
  */
@@ -75,7 +59,6 @@ export function computeRhythmFlags(
 
   // Weeks up to and including currentWeekStart
   const relevantWeeks = allWeeks.filter(w => w <= currentWeekStart);
-  const totalWeeksAvailable = relevantWeeks.length;
 
   for (const login of logins) {
     const contributorRollups = allRollups.filter(r => r.github_login === login);

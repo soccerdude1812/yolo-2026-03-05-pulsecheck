@@ -90,8 +90,6 @@ export async function GET(request: Request): Promise<NextResponse> {
     // However, Supabase does not persist provider_token after session expiry.
     // Cron sync is only viable if user has re-authenticated recently.
     // We attempt to get it; if missing, mark repo as needing resync.
-    const userId = repoWithProfile.user_profiles.id;
-
     // Attempt to retrieve the user's active session provider_token via admin API
     // Supabase admin can list users but not their provider tokens directly.
     // For cron, we use the GITHUB_TOKEN env var as fallback (org-level token).

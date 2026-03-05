@@ -79,7 +79,7 @@ function hasConsecutiveDrop(
  */
 function findSilentContributors(
   contributors: ContributorSummary[],
-  weeksThreshold: number
+  _weeksThreshold: number
 ): string[] {
   return contributors
     .filter((c) => {

@@ -42,7 +42,7 @@ export function SubScoreGrid({ score }: SubScoreGridProps) {
           weight: SCORING_WEIGHTS.revert_rate,
         },
       ]
-    : Array.from({ length: 6 }, (_, i) => ({ label: '—', score: null, weight: undefined }));
+    : Array.from({ length: 6 }, () => ({ label: '—', score: null, weight: undefined }));
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">

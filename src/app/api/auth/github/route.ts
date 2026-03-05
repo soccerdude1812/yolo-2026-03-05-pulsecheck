@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server';
 import { createServerSupabase } from '@/lib/supabase/server';
 import { env } from '@/lib/utils/env';
 
-export async function GET(request: Request): Promise<NextResponse> {
+export async function GET(_request: Request): Promise<NextResponse> {
   const supabase = createServerSupabase();
 
   const { data, error } = await supabase.auth.signInWithOAuth({

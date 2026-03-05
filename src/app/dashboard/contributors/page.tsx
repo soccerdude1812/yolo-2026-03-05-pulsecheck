@@ -1,24 +1,17 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { ContributorHeatmap } from '@/components/dashboard/ContributorHeatmap';
 import { ContributorTable } from '@/components/dashboard/ContributorTable';
 import { Spinner } from '@/components/ui/Spinner';
 import { Card } from '@/components/ui/Card';
 import { useRepoDashboard } from '@/hooks/useRepo';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { canUseFeature } from '@/lib/utils/plan';
-import type { ContributorRollup } from '@/types/index';
 
 export const dynamic = 'force-dynamic';
 
-// Generate sorted week array from rollups
-function getWeeksFromRollups(rollups: ContributorRollup[]): string[] {
-  const weekSet = new Set(rollups.map((r) => r.week_start));
-  return Array.from(weekSet).sort((a, b) => a.localeCompare(b));
-}
-
-export default function ContributorsPage() {
+function ContributorsPageContent() {
   const searchParams = useSearchParams();
   const repoId = searchParams.get('repo');
   const { data, loading, error } = useRepoDashboard(repoId);
@@ -52,9 +45,6 @@ export default function ContributorsPage() {
   }
 
   const contributors = data?.contributors ?? [];
-  // Build rollups from contributors data (aggregate from contributor summaries)
-  // Since we don't have direct rollup access here, use contributor table view
-  const weeks: string[] = [];
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -135,5 +125,17 @@ export default function ContributorsPage() {
         </Card>
       )}
     </div>
+  );
+}
+
+export default function ContributorsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" />
+      </div>
+    }>
+      <ContributorsPageContent />
+    </Suspense>
   );
 }

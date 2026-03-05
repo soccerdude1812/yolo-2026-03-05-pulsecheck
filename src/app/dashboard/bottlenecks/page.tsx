@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { BottleneckChart } from '@/components/dashboard/BottleneckChart';
 import { Spinner } from '@/components/ui/Spinner';
@@ -50,7 +51,7 @@ function BottleneckCard({ bottleneck }: { bottleneck: BottleneckItem }) {
   );
 }
 
-export default function BottlenecksPage() {
+function BottlenecksPageContent() {
   const searchParams = useSearchParams();
   const repoId = searchParams.get('repo');
   const { data, loading, error } = useRepoDashboard(repoId);
@@ -178,5 +179,17 @@ export default function BottlenecksPage() {
         </div>
       </Card>
     </div>
+  );
+}
+
+export default function BottlenecksPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" />
+      </div>
+    }>
+      <BottlenecksPageContent />
+    </Suspense>
   );
 }

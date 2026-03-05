@@ -1,19 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Spinner } from '@/components/ui/Spinner';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
-import { ScoreTrendChart } from '@/components/dashboard/ScoreTrendChart';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { canUseFeature } from '@/lib/utils/plan';
 import type { ContributorDeepDive } from '@/types/index';
 
 export const dynamic = 'force-dynamic';
 
-export default function ContributorDeepDivePage() {
+function ContributorDeepDivePageContent() {
   const params = useParams();
   const searchParams = useSearchParams();
   const login = params.login as string;
@@ -195,5 +194,17 @@ export default function ContributorDeepDivePage() {
         </div>
       </Card>
     </div>
+  );
+}
+
+export default function ContributorDeepDivePage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="w-8 h-8 rounded-full border-2 border-emerald-500 border-t-transparent animate-spin" />
+      </div>
+    }>
+      <ContributorDeepDivePageContent />
+    </Suspense>
   );
 }

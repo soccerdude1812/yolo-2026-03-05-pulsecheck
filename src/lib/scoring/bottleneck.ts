@@ -13,13 +13,6 @@ function median(values: number[]): number | null {
     : sorted[mid];
 }
 
-function percentile(values: number[], p: number): number | null {
-  if (values.length === 0) return null;
-  const sorted = [...values].sort((a, b) => a - b);
-  const index = Math.ceil((p / 100) * sorted.length) - 1;
-  return sorted[Math.max(0, index)];
-}
-
 function average(values: number[]): number {
   if (values.length === 0) return 0;
   return values.reduce((a, b) => a + b, 0) / values.length;
@@ -36,7 +29,7 @@ function average(values: number[]): number {
 export function computeBottleneckAnalysis(
   prs: PRLifecycle[],
   /** All PRs for the repo (for reviewer concentration across periods) */
-  allPRs?: PRLifecycle[]
+  _allPRs?: PRLifecycle[]
 ): BottleneckItem[] {
   const bottlenecks: BottleneckItem[] = [];
   const mergedPRs = prs.filter(pr => pr.state === 'merged');

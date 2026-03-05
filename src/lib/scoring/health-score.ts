@@ -215,7 +215,7 @@ export function computeContributorRhythmScore(rhythmFlags: RhythmFlag[]): number
  * All thresholds imported from config.ts.
  */
 export function computeHealthScore(input: HealthScoreInput): HealthScoreResult {
-  const { prs, allOpenPRs, rollups, rhythmFlags, bottleneckAnalysis } = input;
+  const { prs, allOpenPRs, rhythmFlags, bottleneckAnalysis } = input;
 
   const subScores: ScoreSubSignals = {
     review_velocity: computeReviewVelocityScore(prs),
