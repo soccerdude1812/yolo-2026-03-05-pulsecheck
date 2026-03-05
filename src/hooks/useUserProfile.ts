@@ -47,6 +47,7 @@ export function useUserProfile(): UseUserProfileResult {
             github_username: (user.user_metadata?.user_name as string) ?? '',
             github_avatar_url: (user.user_metadata?.avatar_url as string) ?? null,
             plan: 'free',
+            github_token: null,
             slack_webhook_url: null,
             resend_email: null,
             narrative_month: null,
@@ -66,6 +67,7 @@ export function useUserProfile(): UseUserProfileResult {
           github_username: (user?.user_metadata?.user_name as string) ?? '',
           github_avatar_url: (user?.user_metadata?.avatar_url as string) ?? null,
           plan: settings.plan,
+          github_token: null, // never exposed client-side
           slack_webhook_url: null, // never exposed client-side (MF-8)
           resend_email: settings.resend_email,
           narrative_month: settings.narrative_month,

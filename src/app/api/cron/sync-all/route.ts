@@ -89,7 +89,7 @@ export async function GET(request: Request): Promise<NextResponse> {
       .from('user_profiles')
       .select('github_token')
       .eq('id', repoWithProfile.user_profiles.id)
-      .single();
+      .single() as { data: { github_token: string | null } | null };
 
     const providerToken = profileData?.github_token ?? env.githubToken;
 
